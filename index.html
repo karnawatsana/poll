@@ -217,6 +217,16 @@ body {
   margin-top: -20px;
   z-index: 1;
 }
+.opt5 {
+  /* Deep navy → white mist */
+  background: linear-gradient(125deg,
+    rgba(10,30,74,0.6) 0%,
+    rgba(40,60,140,0.35) 45%,
+    rgba(255,255,255,0.22) 100%);
+  transform: rotate(-1.3deg);
+  margin-top: -20px;
+  z-index: 0;
+}
 
 .option.selected {
   transform: rotate(0deg) translateY(-8px) !important;
@@ -580,6 +590,37 @@ body {
       </div>
     </div>
 
+    <!-- 5 -->
+    <div class="option opt5" data-id="5" data-label="Great Big Game Show → Beat the Bomb → Randolph Beer" onclick="selectOption(this)">
+      <div class="option-inner">
+        <div class="option-top">
+          <div class="option-label-wrap">
+            <div class="option-num-row">
+              <div class="option-num">5</div>
+              <span class="option-short">Games all day</span>
+            </div>
+            <div class="option-title">Great Big Game Show → Beat the Bomb → Randolph Beer</div>
+          </div>
+          <div class="option-radio"><div class="option-radio-dot"></div></div>
+        </div>
+        <div class="option-desc">Start at Great Big Game Show for live hosted games — hilarious for a big group. Then Beat the Bomb for the immersive team challenge (full AC). Wind down at Randolph Beer in BK with cold drinks, ping pong, and shuffleboard.</div>
+        <div class="option-tags">
+          <span class="otag">~$60–75pp</span>
+          <span class="otag">🎮 Games all day</span>
+          <span class="otag">❄️ Full AC</span>
+          <span class="otag">🍺 Randolph Beer</span>
+        </div>
+      </div>
+      <div class="result-wrap" id="result-5">
+        <div class="result-row">
+          <div class="result-track"><div class="result-fill" id="fill-5"></div></div>
+          <div class="result-pct" id="pct-5">0%</div>
+        </div>
+        <div class="result-count" id="count-5">0 votes</div>
+        <div class="winner-badge" id="winner-5">🏆 Group pick</div>
+      </div>
+    </div>
+
   </div>
 
   <div class="submit-area">
@@ -600,29 +641,45 @@ body {
 <div class="bottom-space"></div>
 
 <script>
-  // ── CONFIG ──────────────────────────────────────────────────────────────
-  // 1. Go to https://jsonbin.io  →  sign up free  →  Create Bin
-  // 2. Paste this as the bin content:  {"1":0,"2":0,"3":0,"4":0}
-  // 3. Copy the Bin ID (looks like  67a3f2c0e41b4d34f408b123 )
-  // 4. Copy your API key from Account → API Keys
-  // 5. Replace the two placeholders below:
-  const BIN_ID  = 'YOUR_BIN_ID';   // e.g. '67a3f2c0e41b4d34f408b123'
-  const API_KEY = 'YOUR_API_KEY';  // e.g. '$2a$10$abc...'
-  const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-  // ────────────────────────────────────────────────────────────────────────
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw8PT75F07inFNRB7KhL1kX50pUP0l7zVv6oOz1pyYh622cSiST_rqeWkTfLGnjNPJK/exec';
 
   const LABELS = {
     1: 'Beat the Bomb → DUMBO sports bar → fireworks',
     2: 'Williamsburg → sports bar → Antidote dinner → fireworks',
     3: 'Brookfield Place late lunch + World Cup + waterfront fireworks',
-    4: 'Chelsea Piers → Pier 57 dinner → Suraj rooftop + fireworks'
+    4: 'Chelsea Piers → Pier 57 dinner → Suraj rooftop + fireworks',
+    5: 'Great Big Game Show → Beat the Bomb → Randolph Beer'
   };
 
-  let selectedIds = new Set();
-  let hasVoted    = false;
-  let liveCounts  = {1:0, 2:0, 3:0, 4:0};
+  let selectedIds  = new Set();
+  let hasVoted     = false;
+  let liveCounts   = {1:0, 2:0, 3:0, 4:0, 5:0};
 
-  // ── SELECTION — toggle multi-select ──
+  // ── Load live counts on page open ──
+  async function loadCounts() {
+    try {
+      const res  = await fetch(SCRIPT_URL);
+      const data = await res.json();
+      liveCounts = data;
+      // If someone already voted (localStorage flag), show results straight away
+      if (localStorage.getItem('july4voted')) {
+        revealResults(liveCounts);
+      }
+    } catch(e) { /* silent fail — counts stay at 0 */ }
+  }
+
+  loadCounts();
+
+  // ── Poll for updates every 10s so open tabs stay fresh ──
+  setInterval(async () => {
+    try {
+      const res  = await fetch(SCRIPT_URL);
+      const data = await res.json();
+      liveCounts = data;
+      if (hasVoted) renderBars(liveCounts);
+    } catch(e) {}
+  }, 10000);
+
   function selectOption(el) {
     if (hasVoted) return;
     const id = parseInt(el.dataset.id);
@@ -660,34 +717,6 @@ body {
 
   document.getElementById('voter-name').addEventListener('input', checkReady);
 
-  // ── FETCH live counts from JSONbin ──
-  async function fetchCounts() {
-    if (BIN_ID === 'YOUR_BIN_ID') return liveCounts;
-    try {
-      const res = await fetch(BIN_URL + '/latest', {
-        headers: { 'X-Master-Key': API_KEY }
-      });
-      const json = await res.json();
-      return json.record;
-    } catch(e) {
-      return liveCounts;
-    }
-  }
-
-  // ── WRITE updated counts to JSONbin ──
-  async function saveCounts(counts) {
-    if (BIN_ID === 'YOUR_BIN_ID') return;
-    await fetch(BIN_URL, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Master-Key': API_KEY
-      },
-      body: JSON.stringify(counts)
-    });
-  }
-
-  // ── SUBMIT ──
   async function submitVote() {
     if (selectedIds.size === 0 || hasVoted) return;
     const name = document.getElementById('voter-name').value.trim();
@@ -697,58 +726,50 @@ body {
     document.getElementById('submit-btn').disabled = true;
     document.getElementById('submit-note').textContent = 'Locking in your vote…';
 
-    // 1. Fetch latest counts, increment all selected, save back
-    const current = await fetchCounts();
-    selectedIds.forEach(id => {
-      current[id] = (current[id] || 0) + 1;
-    });
-    liveCounts = current;
-    await saveCounts(current);
-
-    // 2. Also post to Formspree for your records
-    const action = document.getElementById('poll-form').action;
-    if (!action.includes('YOUR_FORM_ID')) {
-      const data = new FormData();
-      const labels = [...selectedIds].map(id => LABELS[id]).join(' | ');
-      data.append('vote', labels);
-      data.append('name', name);
-      fetch(action, { method:'POST', body:data, headers:{'Accept':'application/json'} });
-    }
-
-    showResults(liveCounts);
-
-    // 3. Poll for updates every 8s
-    setInterval(async () => {
-      const updated = await fetchCounts();
+    try {
+      const res  = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        body:   JSON.stringify({ votes: [...selectedIds], name }),
+      });
+      const updated = await res.json();
       liveCounts = updated;
-      renderBars(updated);
-    }, 8000);
-  }
-
-  // ── RENDER ──
-  function renderBars(counts) {
-    const total  = Object.values(counts).reduce((a,b) => a + b, 0);
-    const winner = Object.entries(counts).sort((a,b) => b[1]-a[1])[0][0];
-    for (let i = 1; i <= 4; i++) {
-      const pct = total > 0 ? Math.round((counts[i] / total) * 100) : 0;
-      document.getElementById('fill-'+i).style.width    = pct + '%';
-      document.getElementById('pct-'+i).textContent     = pct + '%';
-      const v = counts[i] || 0;
-      document.getElementById('count-'+i).textContent   = v + (v === 1 ? ' vote' : ' votes');
-      const wb = document.getElementById('winner-'+i);
-      if (String(i) === String(winner) && v > 0) wb.style.display = 'inline-block';
-      else wb.style.display = 'none';
+    } catch(e) {
+      // Fallback: reflect vote locally if network hiccups
+      selectedIds.forEach(id => { liveCounts[id] = (liveCounts[id] || 0) + 1; });
     }
+
+    // Also send to Formspree for name records
+    const fData = new FormData();
+    fData.append('name', name);
+    fData.append('selections', [...selectedIds].map(id => LABELS[id]).join(' | '));
+    fetch('https://formspree.io/f/mojoplan', { method:'POST', body:fData, headers:{'Accept':'application/json'} });
+
+    localStorage.setItem('july4voted', '1');
+    revealResults(liveCounts);
   }
 
-  function showResults(counts) {
+  function revealResults(counts) {
     document.querySelectorAll('.option').forEach(o => o.classList.add('voted'));
-    for (let i = 1; i <= 4; i++)
-      document.getElementById('result-'+i).style.display = 'block';
+    for (let i = 1; i <= 5; i++)
+      document.getElementById('result-' + i).style.display = 'block';
     renderBars(counts);
     document.getElementById('submit-btn').style.display  = 'none';
     document.getElementById('submit-note').style.display = 'none';
     document.getElementById('thanks-area').style.display = 'block';
+  }
+
+  function renderBars(counts) {
+    const total  = Object.values(counts).reduce((a, b) => a + b, 0);
+    const maxVal = Math.max(...Object.values(counts));
+    for (let i = 1; i <= 5; i++) {
+      const v   = counts[i] || 0;
+      const pct = total > 0 ? Math.round((v / total) * 100) : 0;
+      document.getElementById('fill-'  + i).style.width = pct + '%';
+      document.getElementById('pct-'   + i).textContent = pct + '%';
+      document.getElementById('count-' + i).textContent = v + (v === 1 ? ' vote' : ' votes');
+      const wb = document.getElementById('winner-' + i);
+      wb.style.display = (v > 0 && v === maxVal) ? 'inline-block' : 'none';
+    }
   }
 </script>
 </body>
