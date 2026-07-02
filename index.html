@@ -12,224 +12,78 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 button, [onclick] { touch-action: manipulation; -webkit-touch-callout: none; }
-
 :root {
-  --red:       #C8102E;
-  --red-light: #E8304A;
-  --navy:      #0A1E4A;
-  --white:     #FFFFFF;
+  --red: #C8102E; --red-light: #E8304A;
+  --white: #FFFFFF;
   --glass-border: rgba(255,255,255,0.32);
   --text-muted: rgba(255,255,255,0.55);
 }
-
 html { height: 100%; }
-
 body {
-  font-family: 'Figtree', sans-serif;
-  min-height: 100vh;
-  max-width: 430px;
-  margin: 0 auto;
-  overflow-x: hidden;
-  background:
-    radial-gradient(ellipse at 75% 10%, rgba(180,10,30,0.18) 0%, transparent 50%),
-    radial-gradient(ellipse at 15% 90%, rgba(10,20,60,0.25) 0%, transparent 50%),
-    linear-gradient(160deg, #0e0e12 0%, #100810 50%, #120810 100%);
-  background-attachment: fixed;
-  color: var(--white);
+  font-family: 'Figtree', sans-serif; min-height: 100vh; max-width: 430px;
+  margin: 0 auto; overflow-x: hidden;
+  background: radial-gradient(ellipse at 75% 10%, rgba(180,10,30,0.18) 0%, transparent 50%),
+              radial-gradient(ellipse at 15% 90%, rgba(10,20,60,0.25) 0%, transparent 50%),
+              linear-gradient(160deg, #0e0e12 0%, #100810 50%, #120810 100%);
+  background-attachment: fixed; color: var(--white);
 }
-
-/* ── HERO ── */
-.hero {
-  padding: max(56px, calc(env(safe-area-inset-top) + 24px)) 24px 28px;
-}
-.hero-eyebrow {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;
-}
-.hero h1 {
-  font-size: clamp(36px, 9vw, 50px); font-weight: 900;
-  line-height: 0.95; letter-spacing: -0.03em; color: var(--white); margin-bottom: 10px;
-}
-.hero h1 em {
-  font-style: italic;
-  background: linear-gradient(110deg, #ffffff 0%, #f7a8b4 50%, #ffffff 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
+.hero { padding: max(56px, calc(env(safe-area-inset-top) + 24px)) 24px 28px; }
+.hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+.hero h1 { font-size: clamp(36px, 9vw, 50px); font-weight: 900; line-height: 0.95; letter-spacing: -0.03em; color: var(--white); margin-bottom: 10px; }
+.hero h1 em { font-style: italic; background: linear-gradient(110deg, #ffffff 0%, #f7a8b4 50%, #ffffff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .hero-tagline { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.5; }
 .hero-chips { display: flex; flex-wrap: wrap; gap: 7px; }
-.chip {
-  background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.28);
-  color: var(--white); font-size: 11px; font-weight: 700;
-  padding: 5px 12px; border-radius: 20px; letter-spacing: 0.02em;
-}
+.chip { background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.28); color: var(--white); font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 20px; letter-spacing: 0.02em; }
 .chip.accent { background: var(--red); border-color: var(--red-light); }
-
-/* ── NAME ROW ── */
 .name-row { padding: 16px 24px 4px; display: flex; flex-direction: column; gap: 6px; }
 .name-label { font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-muted); }
-.name-input {
-  width: 100%; padding: 13px 16px;
-  border: 1.5px solid var(--glass-border); border-radius: 14px;
-  font-family: 'Figtree', sans-serif; font-size: 16px; font-weight: 500;
-  background: rgba(255,255,255,0.12); backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px); color: var(--white);
-  outline: none; transition: border-color 0.18s, background 0.18s; -webkit-appearance: none;
-}
+.name-input { width: 100%; padding: 13px 16px; border: 1.5px solid var(--glass-border); border-radius: 14px; font-family: 'Figtree', sans-serif; font-size: 16px; font-weight: 500; background: rgba(255,255,255,0.12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: var(--white); outline: none; transition: border-color 0.18s, background 0.18s; -webkit-appearance: none; }
 .name-input::placeholder { color: rgba(255,255,255,0.35); }
 .name-input:focus { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.18); }
-
-/* ── SECTION HEAD ── */
-.section-head {
-  padding: 20px 24px 10px; font-size: 11px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.11em; color: var(--text-muted);
-}
-
-/* ── LIVE COUNT BANNER ── */
-.live-banner {
-  margin: 0 22px 10px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 12px;
-  padding: 8px 14px;
-  font-size: 11px;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.live-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: #4ade80;
-  box-shadow: 0 0 6px #4ade80;
-  flex-shrink: 0;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-/* ── OPTION CARDS ── */
+.section-head { padding: 20px 24px 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.11em; color: var(--text-muted); }
+.live-banner { margin: 0 22px 10px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 8px 14px; font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 6px #4ade80; flex-shrink: 0; animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 .options-list { padding: 0 22px 28px; display: flex; flex-direction: column; }
-
-.option {
-  border-radius: 26px; cursor: pointer; position: relative;
-  overflow: visible; border: 1.5px solid var(--glass-border);
-  transition: border-color 0.2s, transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s;
-  -webkit-tap-highlight-color: transparent; user-select: none;
-  will-change: transform; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-}
-
-.opt1 {
-  background: linear-gradient(135deg, rgba(200,16,46,0.55) 0%, rgba(232,80,100,0.35) 40%, rgba(255,255,255,0.22) 100%);
-  transform: rotate(-1.8deg); margin-top: 0; z-index: 5;
-}
-.opt2 {
-  background: linear-gradient(120deg, rgba(255,255,255,0.28) 0%, rgba(180,200,255,0.22) 45%, rgba(10,30,74,0.5) 100%);
-  transform: rotate(1.5deg); margin-top: -20px; z-index: 4;
-}
-.opt3 {
-  background: linear-gradient(155deg, rgba(10,30,74,0.55) 0%, rgba(80,60,160,0.3) 45%, rgba(200,16,46,0.45) 100%);
-  transform: rotate(-1.1deg); margin-top: -20px; z-index: 3;
-}
-.opt4 {
-  background: linear-gradient(110deg, rgba(255,255,255,0.25) 0%, rgba(220,180,190,0.2) 50%, rgba(200,16,46,0.4) 100%);
-  transform: rotate(1.7deg); margin-top: -20px; z-index: 2;
-}
-.opt5 {
-  background: linear-gradient(125deg, rgba(10,30,74,0.6) 0%, rgba(40,60,140,0.35) 45%, rgba(255,255,255,0.22) 100%);
-  transform: rotate(-1.3deg); margin-top: -20px; z-index: 1;
-}
-
-.option.selected {
-  transform: rotate(0deg) translateY(-8px) !important;
-  border-color: rgba(255,255,255,0.75) !important;
-  z-index: 10 !important;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.25), inset 0 1px 0 rgba(255,255,255,0.4);
-}
+.option { border-radius: 26px; cursor: pointer; position: relative; overflow: visible; border: 1.5px solid var(--glass-border); transition: border-color 0.2s, transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s; -webkit-tap-highlight-color: transparent; user-select: none; will-change: transform; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+.opt1 { background: linear-gradient(135deg, rgba(200,16,46,0.55) 0%, rgba(232,80,100,0.35) 40%, rgba(255,255,255,0.22) 100%); transform: rotate(-1.8deg); margin-top: 0; z-index: 5; }
+.opt2 { background: linear-gradient(120deg, rgba(255,255,255,0.28) 0%, rgba(180,200,255,0.22) 45%, rgba(10,30,74,0.5) 100%); transform: rotate(1.5deg); margin-top: -20px; z-index: 4; }
+.opt3 { background: linear-gradient(155deg, rgba(10,30,74,0.55) 0%, rgba(80,60,160,0.3) 45%, rgba(200,16,46,0.45) 100%); transform: rotate(-1.1deg); margin-top: -20px; z-index: 3; }
+.opt4 { background: linear-gradient(110deg, rgba(255,255,255,0.25) 0%, rgba(220,180,190,0.2) 50%, rgba(200,16,46,0.4) 100%); transform: rotate(1.7deg); margin-top: -20px; z-index: 2; }
+.opt5 { background: linear-gradient(125deg, rgba(10,30,74,0.6) 0%, rgba(40,60,140,0.35) 45%, rgba(255,255,255,0.22) 100%); transform: rotate(-1.3deg); margin-top: -20px; z-index: 1; }
+.option.selected { transform: rotate(0deg) translateY(-8px) !important; border-color: rgba(255,255,255,0.75) !important; z-index: 10 !important; box-shadow: 0 16px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.25), inset 0 1px 0 rgba(255,255,255,0.4); }
 .option.voted { cursor: default; }
 .option:not(.selected):active { transform: rotate(0deg) scale(0.97) !important; }
-
-.option-inner {
-  padding: 17px 17px 14px; border-radius: 25px; overflow: hidden;
-  background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 40%);
-}
+.option-inner { padding: 17px 17px 14px; border-radius: 25px; overflow: hidden; background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 40%); }
 .option-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 9px; }
 .option-label-wrap { flex: 1; }
 .option-num-row { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
-.option-num {
-  width: 22px; height: 22px; background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.4); color: var(--white);
-  font-size: 10px; font-weight: 900; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
+.option-num { width: 22px; height: 22px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: var(--white); font-size: 10px; font-weight: 900; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .option-short { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
 .option-title { font-size: 16px; font-weight: 900; line-height: 1.18; letter-spacing: -0.02em; color: var(--white); }
-.option-radio {
-  width: 22px; height: 22px; border-radius: 7px;
-  border: 2px solid rgba(255,255,255,0.4); flex-shrink: 0; margin-top: 2px;
-  display: flex; align-items: center; justify-content: center;
-  transition: background 0.18s, border-color 0.18s;
-}
+.option-radio { width: 22px; height: 22px; border-radius: 7px; border: 2px solid rgba(255,255,255,0.4); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: background 0.18s, border-color 0.18s; }
 .option.selected .option-radio { background: var(--white); border-color: var(--white); }
-.option-radio-dot {
-  width: 12px; height: 12px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='%23C8102E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: center; opacity: 0; transition: opacity 0.18s;
-}
+.option-radio-dot { width: 12px; height: 12px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='%23C8102E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; opacity: 0; transition: opacity 0.18s; }
 .option.selected .option-radio-dot { opacity: 1; }
 .option-desc { font-size: 12px; line-height: 1.55; color: rgba(255,255,255,0.7); margin-bottom: 10px; }
 .option-tags { display: flex; flex-wrap: wrap; gap: 5px; }
-.otag {
-  font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px;
-  background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22);
-  color: rgba(255,255,255,0.88); letter-spacing: 0.02em;
-}
-
-/* ── RESULT BAR ── */
-.result-wrap {
-  display: none; padding: 8px 17px 14px;
-  border-top: 1px solid rgba(255,255,255,0.15);
-}
+.otag { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px; background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22); color: rgba(255,255,255,0.88); letter-spacing: 0.02em; }
+.result-wrap { padding: 8px 17px 14px; border-top: 1px solid rgba(255,255,255,0.15); }
 .result-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
 .result-track { flex: 1; height: 6px; border-radius: 10px; background: rgba(255,255,255,0.15); overflow: hidden; }
-.result-fill {
-  height: 100%; border-radius: 10px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
-  transition: width 0.6s cubic-bezier(.4,0,.2,1); width: 0%;
-}
+.result-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6)); transition: width 0.6s cubic-bezier(.4,0,.2,1); width: 0%; }
 .result-pct { font-size: 13px; font-weight: 900; color: var(--white); min-width: 34px; text-align: right; }
 .result-count { font-size: 11px; color: rgba(255,255,255,0.45); }
-.winner-badge {
-  display: none; margin-top: 6px;
-  background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);
-  color: var(--white); font-size: 10px; font-weight: 700;
-  letter-spacing: 0.05em; padding: 3px 10px; border-radius: 20px; width: fit-content;
-}
-
-/* ── SUBMIT ── */
+.winner-badge { display: none; margin-top: 6px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: var(--white); font-size: 10px; font-weight: 700; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 20px; width: fit-content; }
 .submit-area { padding: 4px 24px 12px; }
-.submit-btn {
-  width: 100%;
-  background: linear-gradient(135deg, var(--red) 0%, #a00020 100%);
-  color: var(--white); border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 50px; padding: 17px 24px;
-  font-family: 'Figtree', sans-serif; font-size: 16px; font-weight: 900;
-  letter-spacing: -0.01em; cursor: pointer;
-  transition: opacity 0.18s, transform 0.12s; -webkit-appearance: none;
-  box-shadow: 0 4px 20px rgba(200,16,46,0.4);
-}
+.submit-btn { width: 100%; background: linear-gradient(135deg, var(--red) 0%, #a00020 100%); color: var(--white); border: 1px solid rgba(255,255,255,0.25); border-radius: 50px; padding: 17px 24px; font-family: 'Figtree', sans-serif; font-size: 16px; font-weight: 900; letter-spacing: -0.01em; cursor: pointer; transition: opacity 0.18s, transform 0.12s; -webkit-appearance: none; box-shadow: 0 4px 20px rgba(200,16,46,0.4); }
 .submit-btn:disabled { opacity: 0.3; cursor: not-allowed; box-shadow: none; }
 .submit-btn:not(:disabled):active { transform: scale(0.98); }
 .submit-note { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 10px; }
-
-/* ── THANKS ── */
 .thanks-area { display: none; padding: 24px 24px 0; text-align: center; }
 .thanks-icon { font-size: 44px; margin-bottom: 10px; display: block; }
 .thanks-area h2 { font-size: 26px; font-weight: 900; letter-spacing: -0.03em; color: var(--white); margin-bottom: 6px; }
 .thanks-area p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-
 .bottom-space { height: max(24px, calc(env(safe-area-inset-bottom) + 16px)); }
 </style>
 </head>
@@ -270,10 +124,8 @@ body {
           </div>
           <div class="option-radio"><div class="option-radio-dot"></div></div>
         </div>
-        <div class="option-desc">Beat the Bomb for the team game (~$25pp, full AC). Then to DUMBO for the World Cup at a sports bar — great waterfront area, easy food. Stay for the East River fireworks at 9:25.</div>
-        <div class="option-tags">
-          <span class="otag">~$55–70pp</span><span class="otag">❄️ AC game room</span><span class="otag">🍺 Sports bar</span><span class="otag">🎆 East River</span>
-        </div>
+        <div class="option-desc">Beat the Bomb for the team game (~$25pp, full AC). Then to DUMBO for the World Cup at a sports bar. Stay for the East River fireworks at 9:25.</div>
+        <div class="option-tags"><span class="otag">~$55–70pp</span><span class="otag">❄️ AC game room</span><span class="otag">🍺 Sports bar</span><span class="otag">🎆 East River</span></div>
       </div>
       <div class="result-wrap" id="result-1">
         <div class="result-row"><div class="result-track"><div class="result-fill" id="fill-1"></div></div><div class="result-pct" id="pct-1">0%</div></div>
@@ -291,10 +143,8 @@ body {
           </div>
           <div class="option-radio"><div class="option-radio-dot"></div></div>
         </div>
-        <div class="option-desc">Sports bar in Williamsburg for the game (Berry Park has a huge rooftop + screens). Dinner at Antidote on Grand St — cocktail bar meets great food. Rooftop or park for fireworks after.</div>
-        <div class="option-tags">
-          <span class="otag">~$65–85pp</span><span class="otag">🏙️ Rooftop bar</span><span class="otag">🍽️ Dinner</span><span class="otag">🎆 Rooftop fireworks</span>
-        </div>
+        <div class="option-desc">Sports bar in Williamsburg for the game (Berry Park has a huge rooftop + screens). Dinner at Antidote on Grand St. Rooftop or park for fireworks after.</div>
+        <div class="option-tags"><span class="otag">~$65–85pp</span><span class="otag">🏙️ Rooftop bar</span><span class="otag">🍽️ Dinner</span><span class="otag">🎆 Rooftop fireworks</span></div>
       </div>
       <div class="result-wrap" id="result-2">
         <div class="result-row"><div class="result-track"><div class="result-fill" id="fill-2"></div></div><div class="result-pct" id="pct-2">0%</div></div>
@@ -312,10 +162,8 @@ body {
           </div>
           <div class="option-radio"><div class="option-radio-dot"></div></div>
         </div>
-        <div class="option-desc">Brookfield Place has a stunning AC'd atrium, multiple restaurants, and Hudson River views. Watch the game, then walk to Battery Park City for one of the best spots for the Macy's fireworks show.</div>
-        <div class="option-tags">
-          <span class="otag">~$50–70pp</span><span class="otag">❄️ AC atrium</span><span class="otag">🌊 Hudson waterfront</span><span class="otag">🎆 Best fireworks spot</span>
-        </div>
+        <div class="option-desc">Brookfield Place has a stunning AC'd atrium, multiple restaurants, and Hudson River views. Walk to Battery Park City for the Macy's fireworks show.</div>
+        <div class="option-tags"><span class="otag">~$50–70pp</span><span class="otag">❄️ AC atrium</span><span class="otag">🌊 Hudson waterfront</span><span class="otag">🎆 Best fireworks spot</span></div>
       </div>
       <div class="result-wrap" id="result-3">
         <div class="result-row"><div class="result-track"><div class="result-fill" id="fill-3"></div></div><div class="result-pct" id="pct-3">0%</div></div>
@@ -333,10 +181,8 @@ body {
           </div>
           <div class="option-radio"><div class="option-radio-dot"></div></div>
         </div>
-        <div class="option-desc">Chelsea Piers in the afternoon — bowling, golf range, AC throughout. Dinner at Pier 57's rooftop food hall on the Hudson. Then Suraj rooftop for BYOB grilling and fireworks over the water.</div>
-        <div class="option-tags">
-          <span class="otag">~$60–80pp</span><span class="otag">🏓 Chelsea Piers</span><span class="otag">🍖 Rooftop grill</span><span class="otag">🎆 Hudson fireworks</span>
-        </div>
+        <div class="option-desc">Chelsea Piers in the afternoon — bowling, golf range, AC throughout. Dinner at Pier 57's rooftop food hall on the Hudson. Then Suraj rooftop for BYOB grilling and fireworks.</div>
+        <div class="option-tags"><span class="otag">~$60–80pp</span><span class="otag">🏓 Chelsea Piers</span><span class="otag">🍖 Rooftop grill</span><span class="otag">🎆 Hudson fireworks</span></div>
       </div>
       <div class="result-wrap" id="result-4">
         <div class="result-row"><div class="result-track"><div class="result-fill" id="fill-4"></div></div><div class="result-pct" id="pct-4">0%</div></div>
@@ -354,10 +200,8 @@ body {
           </div>
           <div class="option-radio"><div class="option-radio-dot"></div></div>
         </div>
-        <div class="option-desc">Start at Great Big Game Show for live hosted games — hilarious for a big group. Then Beat the Bomb for the immersive team challenge (full AC). Wind down at Randolph Beer in BK with cold drinks, ping pong, and shuffleboard.</div>
-        <div class="option-tags">
-          <span class="otag">~$60–75pp</span><span class="otag">🎮 Games all day</span><span class="otag">❄️ Full AC</span><span class="otag">🍺 Randolph Beer</span>
-        </div>
+        <div class="option-desc">Start at Great Big Game Show for live hosted games — hilarious for a big group. Then Beat the Bomb for the immersive team challenge. Wind down at Randolph Beer in BK with ping pong and shuffleboard.</div>
+        <div class="option-tags"><span class="otag">~$60–75pp</span><span class="otag">🎮 Games all day</span><span class="otag">❄️ Full AC</span><span class="otag">🍺 Randolph Beer</span></div>
       </div>
       <div class="result-wrap" id="result-5">
         <div class="result-row"><div class="result-track"><div class="result-fill" id="fill-5"></div></div><div class="result-pct" id="pct-5">0%</div></div>
@@ -395,45 +239,52 @@ body {
   };
 
   var selectedIds = new Set();
-  var hasVoted    = false;
-  var liveCounts  = {1:0, 2:0, 3:0, 4:0, 5:0};
+  var hasVoted = false;
+  var liveCounts = {1:0, 2:0, 3:0, 4:0, 5:0};
 
-  // allorigins wraps the response in { contents: "..." }
   function fetchCounts() {
     return fetch(PROXY)
       .then(function(r) { return r.json(); })
       .then(function(wrapper) { return JSON.parse(wrapper.contents); });
   }
 
-  function postVotes(ids, name) {
-    // allorigins doesn't support POST passthrough — hit the script directly
-    // (POST to Apps Script works without CORS issues since it doesn't need to read the response cross-origin)
-    return fetch(SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors', // fire and forget
-      body: JSON.stringify({ votes: ids, name: name })
-    });
-  }
-
-  // Load on open
-  fetchCounts().then(function(counts) {
-    liveCounts = counts;
+  function updateBanner(counts) {
     var total = Object.values(counts).reduce(function(a,b){ return a+b; }, 0);
     document.getElementById('live-label').textContent = total + ' vote' + (total !== 1 ? 's' : '') + ' so far — live';
+  }
+
+  function renderBars(counts) {
+    var total = Object.values(counts).reduce(function(a,b){ return a+b; }, 0);
+    var maxVal = Math.max.apply(null, Object.values(counts));
+    for (var i = 1; i <= 5; i++) {
+      var v = counts[i] || 0;
+      var pct = total > 0 ? Math.round((v / total) * 100) : 0;
+      document.getElementById('fill-' + i).style.width = pct + '%';
+      document.getElementById('pct-' + i).textContent = pct + '%';
+      document.getElementById('count-' + i).textContent = v + (v === 1 ? ' vote' : ' votes');
+      var wb = document.getElementById('winner-' + i);
+      wb.style.display = (v > 0 && v === maxVal) ? 'inline-block' : 'none';
+    }
+  }
+
+  // Load counts and show bars to EVERYONE on page open
+  fetchCounts().then(function(counts) {
+    liveCounts = counts;
+    updateBanner(counts);
+    renderBars(counts);
     if (localStorage.getItem('july4voted')) {
-      revealResults(counts);
+      lockPage();
     }
   }).catch(function() {
-    document.getElementById('live-label').textContent = 'Vote — results shown after submitting';
+    document.getElementById('live-label').textContent = 'Vote — see results after submitting';
   });
 
-  // Poll every 10s
+  // Refresh every 10s for everyone
   setInterval(function() {
     fetchCounts().then(function(counts) {
       liveCounts = counts;
-      var total = Object.values(counts).reduce(function(a,b){ return a+b; }, 0);
-      document.getElementById('live-label').textContent = total + ' vote' + (total !== 1 ? 's' : '') + ' so far — live';
-      if (hasVoted) renderBars(counts);
+      updateBanner(counts);
+      renderBars(counts);
     }).catch(function(){});
   }, 10000);
 
@@ -452,9 +303,9 @@ body {
 
   function checkReady() {
     var name = document.getElementById('voter-name').value.trim();
-    var btn  = document.getElementById('submit-btn');
+    var btn = document.getElementById('submit-btn');
     var note = document.getElementById('submit-note');
-    var n    = selectedIds.size;
+    var n = selectedIds.size;
     if (n > 0 && name.length > 0) {
       btn.disabled = false;
       note.textContent = n === 1 ? '1 plan selected — tap to lock it in' : n + ' plans selected — tap to lock it in';
@@ -483,44 +334,34 @@ body {
 
     var ids = Array.from(selectedIds);
 
-    // Write to Google Sheet (no-cors fire-and-forget)
-    postVotes(ids, name);
+    // Fire to Google Sheet (no-cors, fire and forget)
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: JSON.stringify({ votes: ids, name: name })
+    });
 
-    // Also send to Formspree for name records
+    // Also Formspree for name records
     var fData = new FormData();
     fData.append('name', name);
     fData.append('selections', ids.map(function(id){ return LABELS[id]; }).join(' | '));
     fetch('https://formspree.io/f/mojoplan', { method:'POST', body:fData, headers:{'Accept':'application/json'} });
 
-    // Optimistically update local counts
+    // Optimistic local update
     ids.forEach(function(id) { liveCounts[id] = (liveCounts[id] || 0) + 1; });
+    renderBars(liveCounts);
+    updateBanner(liveCounts);
 
     localStorage.setItem('july4voted', '1');
-    revealResults(liveCounts);
+    lockPage();
   }
 
-  function revealResults(counts) {
+  function lockPage() {
+    hasVoted = true;
     document.querySelectorAll('.option').forEach(function(o) { o.classList.add('voted'); });
-    for (var i = 1; i <= 5; i++)
-      document.getElementById('result-' + i).style.display = 'block';
-    renderBars(counts);
-    document.getElementById('submit-btn').style.display  = 'none';
+    document.getElementById('submit-btn').style.display = 'none';
     document.getElementById('submit-note').style.display = 'none';
     document.getElementById('thanks-area').style.display = 'block';
-  }
-
-  function renderBars(counts) {
-    var total  = Object.values(counts).reduce(function(a,b){ return a+b; }, 0);
-    var maxVal = Math.max.apply(null, Object.values(counts));
-    for (var i = 1; i <= 5; i++) {
-      var v   = counts[i] || 0;
-      var pct = total > 0 ? Math.round((v / total) * 100) : 0;
-      document.getElementById('fill-'  + i).style.width = pct + '%';
-      document.getElementById('pct-'   + i).textContent = pct + '%';
-      document.getElementById('count-' + i).textContent = v + (v === 1 ? ' vote' : ' votes');
-      var wb = document.getElementById('winner-' + i);
-      wb.style.display = (v > 0 && v === maxVal) ? 'inline-block' : 'none';
-    }
   }
 </script>
 </body>
