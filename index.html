@@ -17,12 +17,8 @@ button, [onclick] { touch-action: manipulation; -webkit-touch-callout: none; }
   --red:       #C8102E;
   --red-light: #E8304A;
   --navy:      #0A1E4A;
-  --navy-mid:  #1a3a7a;
   --white:     #FFFFFF;
-  --ink:       #0A1020;
-  --glass-white: rgba(255,255,255,0.18);
   --glass-border: rgba(255,255,255,0.32);
-  --text-on-dark: rgba(255,255,255,0.92);
   --text-muted: rgba(255,255,255,0.55);
 }
 
@@ -33,12 +29,10 @@ body {
   min-height: 100vh;
   max-width: 430px;
   margin: 0 auto;
-  position: relative;
   overflow-x: hidden;
-  /* Rich diagonal gradient: deep navy top-left → crimson bottom-right */
   background:
-    radial-gradient(ellipse at 75% 10%,  rgba(180,10,30,0.18)  0%, transparent 50%),
-    radial-gradient(ellipse at 15% 90%,  rgba(10,20,60,0.25)   0%, transparent 50%),
+    radial-gradient(ellipse at 75% 10%, rgba(180,10,30,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 15% 90%, rgba(10,20,60,0.25) 0%, transparent 50%),
     linear-gradient(160deg, #0e0e12 0%, #100810 50%, #120810 100%);
   background-attachment: fixed;
   color: var(--white);
@@ -47,399 +41,200 @@ body {
 /* ── HERO ── */
 .hero {
   padding: max(56px, calc(env(safe-area-inset-top) + 24px)) 24px 28px;
-  position: relative;
 }
-
 .hero-eyebrow {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 10px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;
 }
-
 .hero h1 {
-  font-size: clamp(36px, 9vw, 50px);
-  font-weight: 900;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  color: var(--white);
-  margin-bottom: 10px;
+  font-size: clamp(36px, 9vw, 50px); font-weight: 900;
+  line-height: 0.95; letter-spacing: -0.03em; color: var(--white); margin-bottom: 10px;
 }
 .hero h1 em {
   font-style: italic;
-  /* Stars-and-stripes shimmer: fade red → white */
   background: linear-gradient(110deg, #ffffff 0%, #f7a8b4 50%, #ffffff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-
-.hero-tagline {
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text-muted);
-  margin-bottom: 18px;
-  line-height: 1.5;
-}
-
-.hero-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
+.hero-tagline { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.5; }
+.hero-chips { display: flex; flex-wrap: wrap; gap: 7px; }
 .chip {
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.28);
-  color: var(--white);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 5px 12px;
-  border-radius: 20px;
-  letter-spacing: 0.02em;
+  background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.28);
+  color: var(--white); font-size: 11px; font-weight: 700;
+  padding: 5px 12px; border-radius: 20px; letter-spacing: 0.02em;
 }
-.chip.accent {
-  background: var(--red);
-  border-color: var(--red-light);
-}
+.chip.accent { background: var(--red); border-color: var(--red-light); }
 
 /* ── NAME ROW ── */
-.name-row {
-  padding: 16px 24px 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.name-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
+.name-row { padding: 16px 24px 4px; display: flex; flex-direction: column; gap: 6px; }
+.name-label { font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-muted); }
 .name-input {
-  width: 100%;
-  padding: 13px 16px;
-  border: 1.5px solid var(--glass-border);
-  border-radius: 14px;
-  font-family: 'Figtree', sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: var(--white);
-  outline: none;
-  transition: border-color 0.18s, background 0.18s;
-  -webkit-appearance: none;
+  width: 100%; padding: 13px 16px;
+  border: 1.5px solid var(--glass-border); border-radius: 14px;
+  font-family: 'Figtree', sans-serif; font-size: 16px; font-weight: 500;
+  background: rgba(255,255,255,0.12); backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); color: var(--white);
+  outline: none; transition: border-color 0.18s, background 0.18s; -webkit-appearance: none;
 }
 .name-input::placeholder { color: rgba(255,255,255,0.35); }
-.name-input:focus {
-  border-color: rgba(255,255,255,0.7);
-  background: rgba(255,255,255,0.18);
-}
+.name-input:focus { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.18); }
 
 /* ── SECTION HEAD ── */
 .section-head {
-  padding: 20px 24px 10px;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.11em;
-  color: var(--text-muted);
+  padding: 20px 24px 10px; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.11em; color: var(--text-muted);
 }
 
-/* ── OPTION CARDS — glass, stacked, asymmetric ── */
-.options-list {
-  padding: 0 22px 28px;
+/* ── LIVE COUNT BANNER ── */
+.live-banner {
+  margin: 0 22px 10px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 11px;
+  color: var(--text-muted);
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
+.live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 6px #4ade80;
+  flex-shrink: 0;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── OPTION CARDS ── */
+.options-list { padding: 0 22px 28px; display: flex; flex-direction: column; }
 
 .option {
-  border-radius: 26px;
-  cursor: pointer;
-  position: relative;
-  overflow: visible;
-  border: 1.5px solid var(--glass-border);
+  border-radius: 26px; cursor: pointer; position: relative;
+  overflow: visible; border: 1.5px solid var(--glass-border);
   transition: border-color 0.2s, transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-  will-change: transform;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  -webkit-tap-highlight-color: transparent; user-select: none;
+  will-change: transform; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
 }
 
-/*
-  Card gradients — each a different angle/palette of red, white, blue.
-  Semi-transparent so the dark background bleeds through (glass effect).
-*/
 .opt1 {
-  /* Red → soft white: patriotic warmth */
-  background: linear-gradient(135deg,
-    rgba(200,16,46,0.55) 0%,
-    rgba(232,80,100,0.35) 40%,
-    rgba(255,255,255,0.22) 100%);
-  transform: rotate(-1.8deg);
-  margin-top: 0;
-  z-index: 4;
+  background: linear-gradient(135deg, rgba(200,16,46,0.55) 0%, rgba(232,80,100,0.35) 40%, rgba(255,255,255,0.22) 100%);
+  transform: rotate(-1.8deg); margin-top: 0; z-index: 5;
 }
 .opt2 {
-  /* White → navy: cool, crisp */
-  background: linear-gradient(120deg,
-    rgba(255,255,255,0.28) 0%,
-    rgba(180,200,255,0.22) 45%,
-    rgba(10,30,74,0.5) 100%);
-  transform: rotate(1.5deg);
-  margin-top: -20px;
-  z-index: 3;
+  background: linear-gradient(120deg, rgba(255,255,255,0.28) 0%, rgba(180,200,255,0.22) 45%, rgba(10,30,74,0.5) 100%);
+  transform: rotate(1.5deg); margin-top: -20px; z-index: 4;
 }
 .opt3 {
-  /* Navy → red diagonal */
-  background: linear-gradient(155deg,
-    rgba(10,30,74,0.55) 0%,
-    rgba(80,60,160,0.3) 45%,
-    rgba(200,16,46,0.45) 100%);
-  transform: rotate(-1.1deg);
-  margin-top: -20px;
-  z-index: 2;
+  background: linear-gradient(155deg, rgba(10,30,74,0.55) 0%, rgba(80,60,160,0.3) 45%, rgba(200,16,46,0.45) 100%);
+  transform: rotate(-1.1deg); margin-top: -20px; z-index: 3;
 }
 .opt4 {
-  /* White mist → red edge */
-  background: linear-gradient(110deg,
-    rgba(255,255,255,0.25) 0%,
-    rgba(220,180,190,0.2) 50%,
-    rgba(200,16,46,0.4) 100%);
-  transform: rotate(1.7deg);
-  margin-top: -20px;
-  z-index: 1;
+  background: linear-gradient(110deg, rgba(255,255,255,0.25) 0%, rgba(220,180,190,0.2) 50%, rgba(200,16,46,0.4) 100%);
+  transform: rotate(1.7deg); margin-top: -20px; z-index: 2;
 }
 .opt5 {
-  /* Deep navy → white mist */
-  background: linear-gradient(125deg,
-    rgba(10,30,74,0.6) 0%,
-    rgba(40,60,140,0.35) 45%,
-    rgba(255,255,255,0.22) 100%);
-  transform: rotate(-1.3deg);
-  margin-top: -20px;
-  z-index: 0;
+  background: linear-gradient(125deg, rgba(10,30,74,0.6) 0%, rgba(40,60,140,0.35) 45%, rgba(255,255,255,0.22) 100%);
+  transform: rotate(-1.3deg); margin-top: -20px; z-index: 1;
 }
 
 .option.selected {
   transform: rotate(0deg) translateY(-8px) !important;
   border-color: rgba(255,255,255,0.75) !important;
   z-index: 10 !important;
-  box-shadow:
-    0 16px 40px rgba(0,0,0,0.35),
-    0 0 0 1px rgba(255,255,255,0.25),
-    inset 0 1px 0 rgba(255,255,255,0.4);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.25), inset 0 1px 0 rgba(255,255,255,0.4);
 }
 .option.voted { cursor: default; }
 .option:not(.selected):active { transform: rotate(0deg) scale(0.97) !important; }
 
-/* Inner wrapper clips content, preserves glass look */
 .option-inner {
-  padding: 17px 17px 14px;
-  border-radius: 25px;
-  overflow: hidden;
-  /* Subtle inner highlight at top */
+  padding: 17px 17px 14px; border-radius: 25px; overflow: hidden;
   background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 40%);
 }
-
-.option-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 9px;
-}
+.option-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 9px; }
 .option-label-wrap { flex: 1; }
-
-.option-num-row {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin-bottom: 5px;
-}
+.option-num-row { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
 .option-num {
-  width: 22px; height: 22px;
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.4);
-  color: var(--white);
-  font-size: 10px;
-  font-weight: 900;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  width: 22px; height: 22px; background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.4); color: var(--white);
+  font-size: 10px; font-weight: 900; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.option-short {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-}
-.option-title {
-  font-size: 16px;
-  font-weight: 900;
-  line-height: 1.18;
-  letter-spacing: -0.02em;
-  color: var(--white);
-}
+.option-short { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+.option-title { font-size: 16px; font-weight: 900; line-height: 1.18; letter-spacing: -0.02em; color: var(--white); }
 .option-radio {
-  width: 22px; height: 22px;
-  border-radius: 7px;
-  border: 2px solid rgba(255,255,255,0.4);
-  flex-shrink: 0;
-  margin-top: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 22px; height: 22px; border-radius: 7px;
+  border: 2px solid rgba(255,255,255,0.4); flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
   transition: background 0.18s, border-color 0.18s;
 }
-.option.selected .option-radio {
-  background: var(--white);
-  border-color: var(--white);
-}
+.option.selected .option-radio { background: var(--white); border-color: var(--white); }
 .option-radio-dot {
   width: 12px; height: 12px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='%23C8102E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 0;
-  transition: opacity 0.18s;
+  background-repeat: no-repeat; background-position: center; opacity: 0; transition: opacity 0.18s;
 }
 .option.selected .option-radio-dot { opacity: 1; }
-
-.option-desc {
-  font-size: 12px;
-  line-height: 1.55;
-  color: rgba(255,255,255,0.7);
-  margin-bottom: 10px;
-}
+.option-desc { font-size: 12px; line-height: 1.55; color: rgba(255,255,255,0.7); margin-bottom: 10px; }
 .option-tags { display: flex; flex-wrap: wrap; gap: 5px; }
 .otag {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 9px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(255,255,255,0.22);
-  color: rgba(255,255,255,0.88);
-  letter-spacing: 0.02em;
+  font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px;
+  background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22);
+  color: rgba(255,255,255,0.88); letter-spacing: 0.02em;
 }
 
-/* result bar */
+/* ── RESULT BAR ── */
 .result-wrap {
-  display: none;
-  padding: 8px 17px 14px;
+  display: none; padding: 8px 17px 14px;
   border-top: 1px solid rgba(255,255,255,0.15);
 }
-.result-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 4px;
-}
-.result-track {
-  flex: 1; height: 6px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.15);
-  overflow: hidden;
-}
+.result-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.result-track { flex: 1; height: 6px; border-radius: 10px; background: rgba(255,255,255,0.15); overflow: hidden; }
 .result-fill {
-  height: 100%;
-  border-radius: 10px;
+  height: 100%; border-radius: 10px;
   background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
-  transition: width 0.6s cubic-bezier(.4,0,.2,1);
-  width: 0%;
+  transition: width 0.6s cubic-bezier(.4,0,.2,1); width: 0%;
 }
-.result-pct {
-  font-size: 13px;
-  font-weight: 900;
-  color: var(--white);
-  min-width: 34px;
-  text-align: right;
-}
+.result-pct { font-size: 13px; font-weight: 900; color: var(--white); min-width: 34px; text-align: right; }
 .result-count { font-size: 11px; color: rgba(255,255,255,0.45); }
 .winner-badge {
-  display: none;
-  margin-top: 6px;
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.4);
-  color: var(--white);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  padding: 3px 10px;
-  border-radius: 20px;
-  width: fit-content;
+  display: none; margin-top: 6px;
+  background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);
+  color: var(--white); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.05em; padding: 3px 10px; border-radius: 20px; width: fit-content;
 }
 
 /* ── SUBMIT ── */
-.submit-area {
-  padding: 4px 24px 12px;
-}
+.submit-area { padding: 4px 24px 12px; }
 .submit-btn {
   width: 100%;
   background: linear-gradient(135deg, var(--red) 0%, #a00020 100%);
-  color: var(--white);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 50px;
-  padding: 17px 24px;
-  font-family: 'Figtree', sans-serif;
-  font-size: 16px;
-  font-weight: 900;
-  letter-spacing: -0.01em;
-  cursor: pointer;
-  transition: opacity 0.18s, transform 0.12s;
-  -webkit-appearance: none;
+  color: var(--white); border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 50px; padding: 17px 24px;
+  font-family: 'Figtree', sans-serif; font-size: 16px; font-weight: 900;
+  letter-spacing: -0.01em; cursor: pointer;
+  transition: opacity 0.18s, transform 0.12s; -webkit-appearance: none;
   box-shadow: 0 4px 20px rgba(200,16,46,0.4);
 }
 .submit-btn:disabled { opacity: 0.3; cursor: not-allowed; box-shadow: none; }
 .submit-btn:not(:disabled):active { transform: scale(0.98); }
-
-.submit-note {
-  text-align: center;
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 10px;
-}
+.submit-note { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 10px; }
 
 /* ── THANKS ── */
-.thanks-area {
-  display: none;
-  padding: 24px 24px 0;
-  text-align: center;
-}
+.thanks-area { display: none; padding: 24px 24px 0; text-align: center; }
 .thanks-icon { font-size: 44px; margin-bottom: 10px; display: block; }
-.thanks-area h2 {
-  font-size: 26px;
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  color: var(--white);
-  margin-bottom: 6px;
-}
-.thanks-area p {
-  font-size: 13px;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
+.thanks-area h2 { font-size: 26px; font-weight: 900; letter-spacing: -0.03em; color: var(--white); margin-bottom: 6px; }
+.thanks-area p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
 
-/* ── BOTTOM BREATHING ROOM ── */
-.bottom-space {
-  height: max(24px, calc(env(safe-area-inset-bottom) + 16px));
-}
+.bottom-space { height: max(24px, calc(env(safe-area-inset-bottom) + 16px)); }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-eyebrow">Saturday, July 4 · NYC · 10 people</div>
   <h1>Pick your<br><em>July 4th.</em></h1>
@@ -451,7 +246,6 @@ body {
   </div>
 </div>
 
-<!-- NAME -->
 <div class="name-row">
   <label class="name-label" for="voter-name">Your name</label>
   <input class="name-input" id="voter-name" type="text" placeholder="Who's voting?" autocomplete="off" autocorrect="off" spellcheck="false">
@@ -459,163 +253,114 @@ body {
 
 <div class="section-head">Choose your plan</div>
 
-<!-- OPTIONS -->
-<form id="poll-form" action="https://formspree.io/f/mojoplan" method="POST">
-  <input type="hidden" name="vote" id="hidden-vote">
-  <input type="hidden" name="name" id="hidden-name">
+<div class="live-banner">
+  <div class="live-dot"></div>
+  <span id="live-label">Loading live votes…</span>
+</div>
 
+<form id="poll-form">
   <div class="options-list">
 
-    <!-- 1 -->
-    <div class="option opt1" data-id="1" data-label="Beat the Bomb → DUMBO sports bar → fireworks" onclick="selectOption(this)">
+    <div class="option opt1" data-id="1" onclick="selectOption(this)">
       <div class="option-inner">
         <div class="option-top">
           <div class="option-label-wrap">
-            <div class="option-num-row">
-              <div class="option-num">1</div>
-              <span class="option-short">Brooklyn end-to-end</span>
-            </div>
+            <div class="option-num-row"><div class="option-num">1</div><span class="option-short">Brooklyn end-to-end</span></div>
             <div class="option-title">Beat the Bomb → DUMBO → fireworks</div>
           </div>
           <div class="option-radio"><div class="option-radio-dot"></div></div>
         </div>
         <div class="option-desc">Beat the Bomb for the team game (~$25pp, full AC). Then to DUMBO for the World Cup at a sports bar — great waterfront area, easy food. Stay for the East River fireworks at 9:25.</div>
         <div class="option-tags">
-          <span class="otag">~$55–70pp</span>
-          <span class="otag">❄️ AC game room</span>
-          <span class="otag">🍺 Sports bar</span>
-          <span class="otag">🎆 East River</span>
+          <span class="otag">~$55–70pp</span><span class="otag">❄️ AC game room</span><span class="otag">🍺 Sports bar</span><span class="otag">🎆 East River</span>
         </div>
       </div>
       <div class="result-wrap" id="result-1">
-        <div class="result-row">
-          <div class="result-track"><div class="result-fill" id="fill-1"></div></div>
-          <div class="result-pct" id="pct-1">0%</div>
-        </div>
+        <div class="result-row"><div class="result-track"><div class="result-fill" id="fill-1"></div></div><div class="result-pct" id="pct-1">0%</div></div>
         <div class="result-count" id="count-1">0 votes</div>
         <div class="winner-badge" id="winner-1">🏆 Group pick</div>
       </div>
     </div>
 
-    <!-- 2 -->
-    <div class="option opt2" data-id="2" data-label="Williamsburg → sports bar → Antidote dinner → fireworks" onclick="selectOption(this)">
+    <div class="option opt2" data-id="2" onclick="selectOption(this)">
       <div class="option-inner">
         <div class="option-top">
           <div class="option-label-wrap">
-            <div class="option-num-row">
-              <div class="option-num">2</div>
-              <span class="option-short">Williamsburg vibes</span>
-            </div>
+            <div class="option-num-row"><div class="option-num">2</div><span class="option-short">Williamsburg vibes</span></div>
             <div class="option-title">Williamsburg → Antidote → fireworks</div>
           </div>
           <div class="option-radio"><div class="option-radio-dot"></div></div>
         </div>
         <div class="option-desc">Sports bar in Williamsburg for the game (Berry Park has a huge rooftop + screens). Dinner at Antidote on Grand St — cocktail bar meets great food. Rooftop or park for fireworks after.</div>
         <div class="option-tags">
-          <span class="otag">~$65–85pp</span>
-          <span class="otag">🏙️ Rooftop bar</span>
-          <span class="otag">🍽️ Dinner</span>
-          <span class="otag">🎆 Rooftop fireworks</span>
+          <span class="otag">~$65–85pp</span><span class="otag">🏙️ Rooftop bar</span><span class="otag">🍽️ Dinner</span><span class="otag">🎆 Rooftop fireworks</span>
         </div>
       </div>
       <div class="result-wrap" id="result-2">
-        <div class="result-row">
-          <div class="result-track"><div class="result-fill" id="fill-2"></div></div>
-          <div class="result-pct" id="pct-2">0%</div>
-        </div>
+        <div class="result-row"><div class="result-track"><div class="result-fill" id="fill-2"></div></div><div class="result-pct" id="pct-2">0%</div></div>
         <div class="result-count" id="count-2">0 votes</div>
         <div class="winner-badge" id="winner-2">🏆 Group pick</div>
       </div>
     </div>
 
-    <!-- 3 -->
-    <div class="option opt3" data-id="3" data-label="Brookfield Place late lunch + World Cup + waterfront fireworks" onclick="selectOption(this)">
+    <div class="option opt3" data-id="3" onclick="selectOption(this)">
       <div class="option-inner">
         <div class="option-top">
           <div class="option-label-wrap">
-            <div class="option-num-row">
-              <div class="option-num">3</div>
-              <span class="option-short">Lower Manhattan, easy</span>
-            </div>
+            <div class="option-num-row"><div class="option-num">3</div><span class="option-short">Lower Manhattan, easy</span></div>
             <div class="option-title">Brookfield Place late lunch + fireworks by the water</div>
           </div>
           <div class="option-radio"><div class="option-radio-dot"></div></div>
         </div>
         <div class="option-desc">Brookfield Place has a stunning AC'd atrium, multiple restaurants, and Hudson River views. Watch the game, then walk to Battery Park City for one of the best spots for the Macy's fireworks show.</div>
         <div class="option-tags">
-          <span class="otag">~$50–70pp</span>
-          <span class="otag">❄️ AC atrium</span>
-          <span class="otag">🌊 Hudson waterfront</span>
-          <span class="otag">🎆 Best fireworks spot</span>
+          <span class="otag">~$50–70pp</span><span class="otag">❄️ AC atrium</span><span class="otag">🌊 Hudson waterfront</span><span class="otag">🎆 Best fireworks spot</span>
         </div>
       </div>
       <div class="result-wrap" id="result-3">
-        <div class="result-row">
-          <div class="result-track"><div class="result-fill" id="fill-3"></div></div>
-          <div class="result-pct" id="pct-3">0%</div>
-        </div>
+        <div class="result-row"><div class="result-track"><div class="result-fill" id="fill-3"></div></div><div class="result-pct" id="pct-3">0%</div></div>
         <div class="result-count" id="count-3">0 votes</div>
         <div class="winner-badge" id="winner-3">🏆 Group pick</div>
       </div>
     </div>
 
-    <!-- 4 -->
-    <div class="option opt4" data-id="4" data-label="Chelsea Piers → Pier 57 dinner → Suraj rooftop + fireworks" onclick="selectOption(this)">
+    <div class="option opt4" data-id="4" onclick="selectOption(this)">
       <div class="option-inner">
         <div class="option-top">
           <div class="option-label-wrap">
-            <div class="option-num-row">
-              <div class="option-num">4</div>
-              <span class="option-short">Hudson + rooftop grill</span>
-            </div>
+            <div class="option-num-row"><div class="option-num">4</div><span class="option-short">Hudson + rooftop grill</span></div>
             <div class="option-title">Chelsea Piers → Pier 57 → Suraj rooftop</div>
           </div>
           <div class="option-radio"><div class="option-radio-dot"></div></div>
         </div>
         <div class="option-desc">Chelsea Piers in the afternoon — bowling, golf range, AC throughout. Dinner at Pier 57's rooftop food hall on the Hudson. Then Suraj rooftop for BYOB grilling and fireworks over the water.</div>
         <div class="option-tags">
-          <span class="otag">~$60–80pp</span>
-          <span class="otag">🏓 Chelsea Piers</span>
-          <span class="otag">🍖 Rooftop grill</span>
-          <span class="otag">🎆 Hudson fireworks</span>
+          <span class="otag">~$60–80pp</span><span class="otag">🏓 Chelsea Piers</span><span class="otag">🍖 Rooftop grill</span><span class="otag">🎆 Hudson fireworks</span>
         </div>
       </div>
       <div class="result-wrap" id="result-4">
-        <div class="result-row">
-          <div class="result-track"><div class="result-fill" id="fill-4"></div></div>
-          <div class="result-pct" id="pct-4">0%</div>
-        </div>
+        <div class="result-row"><div class="result-track"><div class="result-fill" id="fill-4"></div></div><div class="result-pct" id="pct-4">0%</div></div>
         <div class="result-count" id="count-4">0 votes</div>
         <div class="winner-badge" id="winner-4">🏆 Group pick</div>
       </div>
     </div>
 
-    <!-- 5 -->
-    <div class="option opt5" data-id="5" data-label="Great Big Game Show → Beat the Bomb → Randolph Beer" onclick="selectOption(this)">
+    <div class="option opt5" data-id="5" onclick="selectOption(this)">
       <div class="option-inner">
         <div class="option-top">
           <div class="option-label-wrap">
-            <div class="option-num-row">
-              <div class="option-num">5</div>
-              <span class="option-short">Games all day</span>
-            </div>
+            <div class="option-num-row"><div class="option-num">5</div><span class="option-short">Games all day</span></div>
             <div class="option-title">Great Big Game Show → Beat the Bomb → Randolph Beer</div>
           </div>
           <div class="option-radio"><div class="option-radio-dot"></div></div>
         </div>
         <div class="option-desc">Start at Great Big Game Show for live hosted games — hilarious for a big group. Then Beat the Bomb for the immersive team challenge (full AC). Wind down at Randolph Beer in BK with cold drinks, ping pong, and shuffleboard.</div>
         <div class="option-tags">
-          <span class="otag">~$60–75pp</span>
-          <span class="otag">🎮 Games all day</span>
-          <span class="otag">❄️ Full AC</span>
-          <span class="otag">🍺 Randolph Beer</span>
+          <span class="otag">~$60–75pp</span><span class="otag">🎮 Games all day</span><span class="otag">❄️ Full AC</span><span class="otag">🍺 Randolph Beer</span>
         </div>
       </div>
       <div class="result-wrap" id="result-5">
-        <div class="result-row">
-          <div class="result-track"><div class="result-fill" id="fill-5"></div></div>
-          <div class="result-pct" id="pct-5">0%</div>
-        </div>
+        <div class="result-row"><div class="result-track"><div class="result-fill" id="fill-5"></div></div><div class="result-pct" id="pct-5">0%</div></div>
         <div class="result-count" id="count-5">0 votes</div>
         <div class="winner-badge" id="winner-5">🏆 Group pick</div>
       </div>
@@ -624,26 +369,24 @@ body {
   </div>
 
   <div class="submit-area">
-    <button class="submit-btn" id="submit-btn" type="button" disabled onclick="submitVote()">
-      Lock in my vote →
-    </button>
+    <button class="submit-btn" id="submit-btn" type="button" disabled onclick="submitVote()">Lock in my vote →</button>
     <p class="submit-note" id="submit-note">Select a plan and enter your name above</p>
   </div>
 
   <div class="thanks-area" id="thanks-area">
     <span class="thanks-icon">🎆</span>
     <h2>Vote locked!</h2>
-    <p>Results update as the group votes in.<br>Happy July 4th 🗽</p>
+    <p>Results update live as the group votes in.<br>Happy July 4th 🗽</p>
   </div>
-
 </form>
 
 <div class="bottom-space"></div>
 
 <script>
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw8PT75F07inFNRB7KhL1kX50pUP0l7zVv6oOz1pyYh622cSiST_rqeWkTfLGnjNPJK/exec';
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw8PT75F07inFNRB7KhL1kX50pUP0l7zVv6oOz1pyYh622cSiST_rqeWkTfLGnjNPJK/exec';
+  var PROXY = 'https://api.allorigins.win/get?url=' + encodeURIComponent(SCRIPT_URL);
 
-  const LABELS = {
+  var LABELS = {
     1: 'Beat the Bomb → DUMBO sports bar → fireworks',
     2: 'Williamsburg → sports bar → Antidote dinner → fireworks',
     3: 'Brookfield Place late lunch + World Cup + waterfront fireworks',
@@ -651,38 +394,52 @@ body {
     5: 'Great Big Game Show → Beat the Bomb → Randolph Beer'
   };
 
-  let selectedIds  = new Set();
-  let hasVoted     = false;
-  let liveCounts   = {1:0, 2:0, 3:0, 4:0, 5:0};
+  var selectedIds = new Set();
+  var hasVoted    = false;
+  var liveCounts  = {1:0, 2:0, 3:0, 4:0, 5:0};
 
-  // ── Load live counts on page open ──
-  async function loadCounts() {
-    try {
-      const res  = await fetch(SCRIPT_URL);
-      const data = await res.json();
-      liveCounts = data;
-      // If someone already voted (localStorage flag), show results straight away
-      if (localStorage.getItem('july4voted')) {
-        revealResults(liveCounts);
-      }
-    } catch(e) { /* silent fail — counts stay at 0 */ }
+  // allorigins wraps the response in { contents: "..." }
+  function fetchCounts() {
+    return fetch(PROXY)
+      .then(function(r) { return r.json(); })
+      .then(function(wrapper) { return JSON.parse(wrapper.contents); });
   }
 
-  loadCounts();
+  function postVotes(ids, name) {
+    // allorigins doesn't support POST passthrough — hit the script directly
+    // (POST to Apps Script works without CORS issues since it doesn't need to read the response cross-origin)
+    return fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors', // fire and forget
+      body: JSON.stringify({ votes: ids, name: name })
+    });
+  }
 
-  // ── Poll for updates every 10s so open tabs stay fresh ──
-  setInterval(async () => {
-    try {
-      const res  = await fetch(SCRIPT_URL);
-      const data = await res.json();
-      liveCounts = data;
-      if (hasVoted) renderBars(liveCounts);
-    } catch(e) {}
+  // Load on open
+  fetchCounts().then(function(counts) {
+    liveCounts = counts;
+    var total = Object.values(counts).reduce(function(a,b){ return a+b; }, 0);
+    document.getElementById('live-label').textContent = total + ' vote' + (total !== 1 ? 's' : '') + ' so far — live';
+    if (localStorage.getItem('july4voted')) {
+      revealResults(counts);
+    }
+  }).catch(function() {
+    document.getElementById('live-label').textContent = 'Vote — results shown after submitting';
+  });
+
+  // Poll every 10s
+  setInterval(function() {
+    fetchCounts().then(function(counts) {
+      liveCounts = counts;
+      var total = Object.values(counts).reduce(function(a,b){ return a+b; }, 0);
+      document.getElementById('live-label').textContent = total + ' vote' + (total !== 1 ? 's' : '') + ' so far — live';
+      if (hasVoted) renderBars(counts);
+    }).catch(function(){});
   }, 10000);
 
   function selectOption(el) {
     if (hasVoted) return;
-    const id = parseInt(el.dataset.id);
+    var id = parseInt(el.dataset.id);
     if (selectedIds.has(id)) {
       selectedIds.delete(id);
       el.classList.remove('selected');
@@ -694,15 +451,13 @@ body {
   }
 
   function checkReady() {
-    const name = document.getElementById('voter-name').value.trim();
-    const btn  = document.getElementById('submit-btn');
-    const note = document.getElementById('submit-note');
-    const n    = selectedIds.size;
+    var name = document.getElementById('voter-name').value.trim();
+    var btn  = document.getElementById('submit-btn');
+    var note = document.getElementById('submit-note');
+    var n    = selectedIds.size;
     if (n > 0 && name.length > 0) {
       btn.disabled = false;
-      note.textContent = n === 1
-        ? '1 plan selected — tap to lock it in'
-        : `${n} plans selected — tap to lock it in`;
+      note.textContent = n === 1 ? '1 plan selected — tap to lock it in' : n + ' plans selected — tap to lock it in';
     } else if (n === 0 && name.length === 0) {
       btn.disabled = true;
       note.textContent = 'Select your favourite plans and enter your name above';
@@ -717,40 +472,36 @@ body {
 
   document.getElementById('voter-name').addEventListener('input', checkReady);
 
-  async function submitVote() {
+  function submitVote() {
     if (selectedIds.size === 0 || hasVoted) return;
-    const name = document.getElementById('voter-name').value.trim();
+    var name = document.getElementById('voter-name').value.trim();
     if (!name) return;
 
     hasVoted = true;
     document.getElementById('submit-btn').disabled = true;
     document.getElementById('submit-note').textContent = 'Locking in your vote…';
 
-    try {
-      const res  = await fetch(SCRIPT_URL, {
-        method: 'POST',
-        body:   JSON.stringify({ votes: [...selectedIds], name }),
-      });
-      const updated = await res.json();
-      liveCounts = updated;
-    } catch(e) {
-      // Fallback: reflect vote locally if network hiccups
-      selectedIds.forEach(id => { liveCounts[id] = (liveCounts[id] || 0) + 1; });
-    }
+    var ids = Array.from(selectedIds);
+
+    // Write to Google Sheet (no-cors fire-and-forget)
+    postVotes(ids, name);
 
     // Also send to Formspree for name records
-    const fData = new FormData();
+    var fData = new FormData();
     fData.append('name', name);
-    fData.append('selections', [...selectedIds].map(id => LABELS[id]).join(' | '));
+    fData.append('selections', ids.map(function(id){ return LABELS[id]; }).join(' | '));
     fetch('https://formspree.io/f/mojoplan', { method:'POST', body:fData, headers:{'Accept':'application/json'} });
+
+    // Optimistically update local counts
+    ids.forEach(function(id) { liveCounts[id] = (liveCounts[id] || 0) + 1; });
 
     localStorage.setItem('july4voted', '1');
     revealResults(liveCounts);
   }
 
   function revealResults(counts) {
-    document.querySelectorAll('.option').forEach(o => o.classList.add('voted'));
-    for (let i = 1; i <= 5; i++)
+    document.querySelectorAll('.option').forEach(function(o) { o.classList.add('voted'); });
+    for (var i = 1; i <= 5; i++)
       document.getElementById('result-' + i).style.display = 'block';
     renderBars(counts);
     document.getElementById('submit-btn').style.display  = 'none';
@@ -759,15 +510,15 @@ body {
   }
 
   function renderBars(counts) {
-    const total  = Object.values(counts).reduce((a, b) => a + b, 0);
-    const maxVal = Math.max(...Object.values(counts));
-    for (let i = 1; i <= 5; i++) {
-      const v   = counts[i] || 0;
-      const pct = total > 0 ? Math.round((v / total) * 100) : 0;
+    var total  = Object.values(counts).reduce(function(a,b){ return a+b; }, 0);
+    var maxVal = Math.max.apply(null, Object.values(counts));
+    for (var i = 1; i <= 5; i++) {
+      var v   = counts[i] || 0;
+      var pct = total > 0 ? Math.round((v / total) * 100) : 0;
       document.getElementById('fill-'  + i).style.width = pct + '%';
       document.getElementById('pct-'   + i).textContent = pct + '%';
       document.getElementById('count-' + i).textContent = v + (v === 1 ? ' vote' : ' votes');
-      const wb = document.getElementById('winner-' + i);
+      var wb = document.getElementById('winner-' + i);
       wb.style.display = (v > 0 && v === maxVal) ? 'inline-block' : 'none';
     }
   }
