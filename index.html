@@ -283,7 +283,7 @@ body {
 }
 .option-radio {
   width: 22px; height: 22px;
-  border-radius: 50%;
+  border-radius: 7px;
   border: 2px solid rgba(255,255,255,0.4);
   flex-shrink: 0;
   margin-top: 2px;
@@ -297,9 +297,10 @@ body {
   border-color: var(--white);
 }
 .option-radio-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--red);
+  width: 12px; height: 12px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='%23C8102E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
   opacity: 0;
   transition: opacity 0.18s;
 }
@@ -432,7 +433,7 @@ body {
 <div class="hero">
   <div class="hero-eyebrow">Saturday, July 4 · NYC · 10 people</div>
   <h1>Pick your<br><em>July 4th.</em></h1>
-  <p class="hero-tagline">One vote per person — we go with the winner 🗽</p>
+  <p class="hero-tagline">Pick everything you're down for 🗽</p>
   <div class="hero-chips">
     <span class="chip accent">⚽ 5 PM kickoff</span>
     <span class="chip">☀️ Hot day</span>
@@ -599,16 +600,39 @@ body {
 <div class="bottom-space"></div>
 
 <script>
-  let selectedId = null;
-  let hasVoted = false;
-  const voteCounts = {1:0, 2:0, 3:0, 4:0};
+  // ── CONFIG ──────────────────────────────────────────────────────────────
+  // 1. Go to https://jsonbin.io  →  sign up free  →  Create Bin
+  // 2. Paste this as the bin content:  {"1":0,"2":0,"3":0,"4":0}
+  // 3. Copy the Bin ID (looks like  67a3f2c0e41b4d34f408b123 )
+  // 4. Copy your API key from Account → API Keys
+  // 5. Replace the two placeholders below:
+  const BIN_ID  = 'YOUR_BIN_ID';   // e.g. '67a3f2c0e41b4d34f408b123'
+  const API_KEY = 'YOUR_API_KEY';  // e.g. '$2a$10$abc...'
+  const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+  // ────────────────────────────────────────────────────────────────────────
 
+  const LABELS = {
+    1: 'Beat the Bomb → DUMBO sports bar → fireworks',
+    2: 'Williamsburg → sports bar → Antidote dinner → fireworks',
+    3: 'Brookfield Place late lunch + World Cup + waterfront fireworks',
+    4: 'Chelsea Piers → Pier 57 dinner → Suraj rooftop + fireworks'
+  };
+
+  let selectedIds = new Set();
+  let hasVoted    = false;
+  let liveCounts  = {1:0, 2:0, 3:0, 4:0};
+
+  // ── SELECTION — toggle multi-select ──
   function selectOption(el) {
     if (hasVoted) return;
-    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedId = parseInt(el.dataset.id);
-    document.getElementById('hidden-vote').value = el.dataset.label;
+    const id = parseInt(el.dataset.id);
+    if (selectedIds.has(id)) {
+      selectedIds.delete(id);
+      el.classList.remove('selected');
+    } else {
+      selectedIds.add(id);
+      el.classList.add('selected');
+    }
     checkReady();
   }
 
@@ -616,15 +640,18 @@ body {
     const name = document.getElementById('voter-name').value.trim();
     const btn  = document.getElementById('submit-btn');
     const note = document.getElementById('submit-note');
-    if (selectedId && name.length > 0) {
+    const n    = selectedIds.size;
+    if (n > 0 && name.length > 0) {
       btn.disabled = false;
-      note.textContent = 'One vote per person — tap to lock it in';
-    } else if (!selectedId && name.length === 0) {
+      note.textContent = n === 1
+        ? '1 plan selected — tap to lock it in'
+        : `${n} plans selected — tap to lock it in`;
+    } else if (n === 0 && name.length === 0) {
       btn.disabled = true;
-      note.textContent = 'Select a plan and enter your name above';
-    } else if (!selectedId) {
+      note.textContent = 'Select your favourite plans and enter your name above';
+    } else if (n === 0) {
       btn.disabled = true;
-      note.textContent = 'Select a plan to continue';
+      note.textContent = 'Select at least one plan to continue';
     } else {
       btn.disabled = true;
       note.textContent = 'Enter your name above to vote';
@@ -633,38 +660,92 @@ body {
 
   document.getElementById('voter-name').addEventListener('input', checkReady);
 
-  function submitVote() {
-    if (!selectedId || hasVoted) return;
+  // ── FETCH live counts from JSONbin ──
+  async function fetchCounts() {
+    if (BIN_ID === 'YOUR_BIN_ID') return liveCounts;
+    try {
+      const res = await fetch(BIN_URL + '/latest', {
+        headers: { 'X-Master-Key': API_KEY }
+      });
+      const json = await res.json();
+      return json.record;
+    } catch(e) {
+      return liveCounts;
+    }
+  }
+
+  // ── WRITE updated counts to JSONbin ──
+  async function saveCounts(counts) {
+    if (BIN_ID === 'YOUR_BIN_ID') return;
+    await fetch(BIN_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': API_KEY
+      },
+      body: JSON.stringify(counts)
+    });
+  }
+
+  // ── SUBMIT ──
+  async function submitVote() {
+    if (selectedIds.size === 0 || hasVoted) return;
     const name = document.getElementById('voter-name').value.trim();
     if (!name) return;
-    hasVoted = true;
-    document.getElementById('hidden-name').value = name;
-    voteCounts[selectedId] += 1;
 
+    hasVoted = true;
+    document.getElementById('submit-btn').disabled = true;
+    document.getElementById('submit-note').textContent = 'Locking in your vote…';
+
+    // 1. Fetch latest counts, increment all selected, save back
+    const current = await fetchCounts();
+    selectedIds.forEach(id => {
+      current[id] = (current[id] || 0) + 1;
+    });
+    liveCounts = current;
+    await saveCounts(current);
+
+    // 2. Also post to Formspree for your records
     const action = document.getElementById('poll-form').action;
     if (!action.includes('YOUR_FORM_ID')) {
       const data = new FormData();
-      data.append('vote', document.getElementById('hidden-vote').value);
+      const labels = [...selectedIds].map(id => LABELS[id]).join(' | ');
+      data.append('vote', labels);
       data.append('name', name);
       fetch(action, { method:'POST', body:data, headers:{'Accept':'application/json'} });
     }
-    showResults();
+
+    showResults(liveCounts);
+
+    // 3. Poll for updates every 8s
+    setInterval(async () => {
+      const updated = await fetchCounts();
+      liveCounts = updated;
+      renderBars(updated);
+    }, 8000);
   }
 
-  function showResults() {
-    document.querySelectorAll('.option').forEach(o => o.classList.add('voted'));
-    const total  = Object.values(voteCounts).reduce((a,b)=>a+b,0);
-    const winner = Object.entries(voteCounts).sort((a,b)=>b[1]-a[1])[0][0];
+  // ── RENDER ──
+  function renderBars(counts) {
+    const total  = Object.values(counts).reduce((a,b) => a + b, 0);
+    const winner = Object.entries(counts).sort((a,b) => b[1]-a[1])[0][0];
     for (let i = 1; i <= 4; i++) {
-      const pct = total > 0 ? Math.round((voteCounts[i]/total)*100) : 0;
-      document.getElementById('result-'+i).style.display = 'block';
-      document.getElementById('fill-'+i).style.width     = pct+'%';
-      document.getElementById('pct-'+i).textContent      = pct+'%';
-      const v = voteCounts[i];
-      document.getElementById('count-'+i).textContent = v+(v===1?' vote':' votes');
-      if (String(i) === String(winner) && v > 0)
-        document.getElementById('winner-'+i).style.display = 'inline-block';
+      const pct = total > 0 ? Math.round((counts[i] / total) * 100) : 0;
+      document.getElementById('fill-'+i).style.width    = pct + '%';
+      document.getElementById('pct-'+i).textContent     = pct + '%';
+      const v = counts[i] || 0;
+      document.getElementById('count-'+i).textContent   = v + (v === 1 ? ' vote' : ' votes');
+      const wb = document.getElementById('winner-'+i);
+      if (String(i) === String(winner) && v > 0) wb.style.display = 'inline-block';
+      else wb.style.display = 'none';
     }
+  }
+
+  function showResults(counts) {
+    document.querySelectorAll('.option').forEach(o => o.classList.add('voted'));
+    for (let i = 1; i <= 4; i++)
+      document.getElementById('result-'+i).style.display = 'block';
+    renderBars(counts);
     document.getElementById('submit-btn').style.display  = 'none';
     document.getElementById('submit-note').style.display = 'none';
     document.getElementById('thanks-area').style.display = 'block';
